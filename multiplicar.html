@@ -35,7 +35,13 @@
 			<ion-col>
 				<ion-item>
 				  <ion-label position="floating">Varianza Variable 1</ion-label>
-				  <ion-input id="v1" onchange="cambiar()"></ion-input>
+				  <ion-input id="v1" onchange="$('#d1').val(Math.sqrt(parseFloat($(this).val()))); cambiar()"></ion-input>
+				</ion-item>
+			</ion-col>
+			<ion-col>
+				<ion-item>
+				  <ion-label position="floating">Desvio Variable 1</ion-label>
+				  <ion-input id="d1" onchange="$('#v1').val(parseFloat($(this).val())**2); cambiar()"></ion-input>
 				</ion-item>
 			</ion-col>
 		  </ion-row>
@@ -49,7 +55,13 @@
 			<ion-col>
 				<ion-item>
 				  <ion-label position="floating">Varianza Variable 2</ion-label>
-				  <ion-input id="v2" onchange="cambiar()"></ion-input>
+				  <ion-input id="v2" onchange="$('#d2').val(Math.sqrt(parseFloat($(this).val()))); cambiar()"></ion-input>
+				</ion-item>
+			</ion-col>
+			<ion-col>
+				<ion-item>
+				  <ion-label position="floating">Desvio Variable 2</ion-label>
+				  <ion-input id="d2" onchange="$('#v2').val(parseFloat($(this).val())**2); cambiar()"></ion-input>
 				</ion-item>
 			</ion-col>
 		  </ion-row>
@@ -66,17 +78,26 @@
 				  <ion-input id="vr" readonly></ion-input>
 				</ion-item>
 			</ion-col>
+			<ion-col>
+				<ion-item>
+				  <ion-label position="floating">Desvio Resultado</ion-label>
+				  <ion-input id="dr" readonly></ion-input>
+				</ion-item>
+			</ion-col>
 		  </ion-row>
 		</ion-grid>
 	</ion-content>
 	<script>
 		function cambiar() {
+			debugger;
 			const e1 = parseFloat($("#e1").val())
 			const v1 = parseFloat($("#v1").val())
 			const e2 = parseFloat($("#e2").val())
 			const v2 = parseFloat($("#v2").val())
 			$("#er").val(e1*e2)
-			$("#vr").val(v1*v2+v1*e2*e2+v2*e1*e1)
+			const varianza = v1*v2+v1*e2*e2+v2*e1*e1
+			$("#vr").val(varianza)
+			$("#dr").val(Math.sqrt(varianza))
 		}
 	</script>
 </body>
