@@ -65,7 +65,6 @@
 	</ion-content>
 	<script>
 		function cambiar() {
-			debugger;
 			const esperanza = parseFloat($("#e1").val())
 			const desvio = parseFloat($("#d1").val())
 			$("#m").val(Math.log(esperanza / Math.sqrt(1 + (desvio/esperanza)**2)))
