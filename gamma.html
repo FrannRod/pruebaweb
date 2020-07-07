@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- BootsTrap -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+<!-- Ionic -->
+<script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+<script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css"/>
+<!--  -->
+</head>
+<body>
+	<ion-header>
+		<ion-toolbar>
+		<ion-buttons slot="start">
+			<ion-button  href="index.html"><ion-icon slot="start" name="arrow-back-outline"></ion-icon></ion-button>
+		</ion-buttons>
+		<ion-title>Utilidades Gamma</ion-title>
+		</ion-toolbar>
+	</ion-header>
+	<ion-content>
+		<ion-grid>
+			<ion-row>
+				<ion-col>
+					<ion-item>
+						<ion-label position="floating">Esperanza</ion-label>
+						<ion-input id="e1" onchange="cambiar()"></ion-input>
+					</ion-item>
+				</ion-col>
+				<ion-col>
+					<ion-item>
+						<ion-label position="floating">Varianza</ion-label>
+						<ion-input id="v1" onchange="$('#d1').val(Math.sqrt(parseFloat($(this).val()))); cambiar()"></ion-input>
+					</ion-item>
+				</ion-col>
+				<ion-col>
+					<ion-item>
+						<ion-label position="floating">Desvio</ion-label>
+						<ion-input id="d1" onchange="$('#v1').val(parseFloat($(this).val())**2); cambiar()"></ion-input>
+					</ion-item>
+				</ion-col>
+			</ion-row>
+			<ion-row>
+				<ion-col></ion-col>
+				<ion-col>
+					<ion-item>
+						<ion-label position="floating">Lambda</ion-label>
+						<ion-input id="lambda" readonly></ion-input>
+					</ion-item>
+				</ion-col>
+				<ion-col>
+					<ion-item>
+						<ion-label position="floating">r</ion-label>
+						<ion-input id="r" readonly></ion-input>
+					</ion-item>
+				</ion-col>
+				<ion-col></ion-col>
+			</ion-row>
+		</ion-grid>
+	</ion-content>
+	<script>
+		function cambiar() {
+			const esperanza = parseFloat($("#e1").val())
+			const varianza = parseFloat($("#v1").val())
+			$("#lambda").val(esperanza / varianza)
+			$("#r").val((esperanza)**2 / varianza)
+		}
+	</script>
+</body>
+</html>
