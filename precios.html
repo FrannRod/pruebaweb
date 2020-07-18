@@ -23,15 +23,11 @@
 	<ion-content>
 		<ion-list size=3>
 		  <ion-item>
-			<ion-label position="floating">MercadoLibre</ion-label>
-		    <ion-input id="m15" onchange='
-		    	const parcial = parseFloat($(this).val())
-				redondear("total", parcial * 100 / 85)
-				calcular()
-		    '></ion-input>
+			<ion-label position="floating">Sin Descuento</ion-label>
+		    <ion-input id="total" onchange="calcular()"></ion-input>
 		  </ion-item>
 		  <ion-item>
-			<ion-label position="floating">+5%</ion-label>
+			<ion-label position="floating">5%</ion-label>
 		    <ion-input id="m5" onchange='
 		    	const parcial = parseFloat($(this).val())
 				redondear("total", parcial * 100 / 95)
@@ -39,7 +35,7 @@
 		    '></ion-input>
 		  </ion-item>
 		  <ion-item>
-			<ion-label position="floating">+10%</ion-label>
+			<ion-label position="floating">10%</ion-label>
 		    <ion-input id="m10" onchange='
 		    	const parcial = parseFloat($(this).val())
 				redondear("total", parcial * 100 / 90)
@@ -47,8 +43,12 @@
 		    '></ion-input>
 		  </ion-item>
 		  <ion-item>
-			<ion-label position="floating">+15%</ion-label>
-		    <ion-input id="total" onchange="calcular()"></ion-input>
+			<ion-label position="floating">MercadoLibre</ion-label>
+		    <ion-input id="m15" onchange='
+		    	const parcial = parseFloat($(this).val())
+				redondear("total", parcial * 100 / 85)
+				calcular()
+		    '></ion-input>
 		  </ion-item>
 		</ion-list>
 
