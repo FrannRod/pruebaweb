@@ -26,7 +26,7 @@
 			<ion-label position="floating">MercadoLibre</ion-label>
 		    <ion-input id="m15" onchange='
 		    	const parcial = parseFloat($(this).val())
-				$("#total").val(parcial * 100 / 85)
+				redondear("total", parcial * 100 / 85)
 				calcular()
 		    '></ion-input>
 		  </ion-item>
@@ -34,7 +34,7 @@
 			<ion-label position="floating">+5%</ion-label>
 		    <ion-input id="m5" onchange='
 		    	const parcial = parseFloat($(this).val())
-				$("#total").val(parcial * 100 / 95)
+				redondear("total", parcial * 100 / 95)
 				calcular()
 		    '></ion-input>
 		  </ion-item>
@@ -42,7 +42,7 @@
 			<ion-label position="floating">+10%</ion-label>
 		    <ion-input id="m10" onchange='
 		    	const parcial = parseFloat($(this).val())
-				$("#total").val(parcial * 100 / 90)
+				redondear("total", parcial * 100 / 90)
 				calcular()
 		    '></ion-input>
 		  </ion-item>
@@ -56,9 +56,13 @@
 	<script>
 		function calcular(){
 			const total = parseFloat($("#total").val())
-			$("#m15").val(total - total * 15 / 100)
-			$("#m5").val(total - total * 5 / 100)
-			$("#m10").val(total - total * 10 / 100)
+			redondear("m15", total - total * 15 / 100)
+			redondear("m5", total - total * 5 / 100)
+			redondear("m10", total - total * 10 / 100)
+		}
+		function redondear(inputName, valor){
+			const redondeo = Math.round(valor * 100) / 100
+			$("#" + inputName).val(redondeo)
 		}
 	</script>
 </body>
