@@ -29,42 +29,115 @@
 			<ion-col>
 				<ion-item>
 				  <ion-label position="floating">Código</ion-label>
-				  <ion-input id="codigo"></ion-input>
+				  <ion-input id="codigo" value = "001111"></ion-input>
 				</ion-item>
 			</ion-col>
 			<ion-col>
 				<ion-item>
 				  <ion-label position="floating">Polinomio</ion-label>
-				  <ion-input id="crc"></ion-input>
+				  <ion-input id="crc" value = "11"></ion-input>
 				</ion-item>
 			</ion-col>
 			<ion-col>
-			  <ion-button style="margin-top: 28px;" onclick="calcular()">Enviar</ion-button>
-			  <ion-button style="margin-top: 28px;" onclick="calcular()">Recibir</ion-button>
+			  <ion-button style="margin-top: 28px;" onclick="enviar()">Enviar</ion-button>
+			  <ion-button style="margin-top: 28px;" onclick="enviar()">Recibir</ion-button>
 			</ion-col>
 		  </ion-row>
 		</ion-grid>
 	</ion-content>
 	<script>
-		function calcular() {
+		function crearItem(explicacion = null){
 			let fila = $("<ion-row/>", {
-			  appendTo: $("#grilla")
+				"class": "nuevo",
+				appendTo: $("#grilla")
 			});
 			let columna = $("<ion-col/>", {
 			  appendTo: fila
 			});
-			let item = $("<ion-item/>", {
+			if (explicacion)
+				$("<ion-label/>", {
+					text: explicacion,
+					appendTo: $("<ion-item/>", {
+									appendTo: $("<ion-col/>", {
+										appendTo: fila
+									})
+								})
+				});
+			return $("<ion-item/>", {
 			  appendTo: columna
-			});
-			$("<span/>", {
-			  text: "Próximamente...",
-			  appendTo: item
-			});
-			$("<span/>", {
-			  text: "Méntemeproxima...",
-			  "style": 'color: red;',
-			  appendTo: item
-			});
+			});			
+		}
+		function enviar() {
+			$(".nuevo").remove()
+			let codigo = $("#codigo").val()
+			const crc = $("#crc").val()
+			let inicio = 0
+			while (inicio < codigo.length && codigo[inicio] != "1")
+				inicio++
+			let cantidadExtra = 0
+			while (2**cantidadExtra < codigo.length)
+				cantidadExtra++;
+			let item = crearItem("Copio el enunciado y agrego bits")
+			for (var i = 0; i<codigo.length; i++)
+				$("<span/>", {
+					text: codigo[i],
+					appendTo: item
+				});
+			for(var i = 0; i<cantidadExtra; i++){
+				$("<span/>", {
+					text: "0",
+					"style": 'color: red;',
+					appendTo: item
+				});
+				codigo += "0"
+			}
+
+			item = crearItem("Ignoro los 0")
+			for (var i = 0; i<codigo.length; i++){
+				$("<span/>", {
+					text: codigo[i],
+					appendTo: item
+				});
+			}
+			let fin = inicio + crc.length
+			while(inicio < codigo.length){
+				item = crearItem("Copio el crc")
+				for (var i = 0; i<inicio; i++){
+					$("<span/>", {
+						text: "_",
+						appendTo: item
+					});
+				}
+				$("<span/>", {
+					text: crc,
+					appendTo: item
+				});
+				item = crearItem("Divido")
+				for (var i = 0; i<inicio; i++){
+					$("<span/>", {
+						text: "_",
+						appendTo: item
+					});
+				}
+				for (var i = 0; i<crc.length; i++){
+					let imprimir = crc[i] == codigo[inicio + i] ? "0" : "1"
+					$("<span/>", {
+						text: imprimir,
+						"style": 'color: red;',
+						appendTo: item
+					});
+				}
+				for (var i = fin; i<codigo.length; i++){
+					let imprimir = crc[i] == codigo[inicio + i] ? "0" : "1"
+					$("<span/>", {
+						text: codigo[i],
+						appendTo: item
+					});
+				}
+				inicio += crc.length
+				fin = inicio + crc.length
+			}
+			crearItem("Ojo que esta mal jaj")
 		}
 	</script>
 </body>
