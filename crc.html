@@ -56,9 +56,13 @@
 			let item = $("<ion-item/>", {
 			  appendTo: columna
 			});
-			$("<ion-input/>", {
-			  value: "Próximamente...",
-			  "readonly": "true",
+			$("<span/>", {
+			  text: "Próximamente...",
+			  appendTo: item
+			});
+			$("<span/>", {
+			  text: "Méntemeproxima...",
+			  "style": 'color: red;',
 			  appendTo: item
 			});
 		}
