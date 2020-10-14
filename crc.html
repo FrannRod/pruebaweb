@@ -161,7 +161,7 @@
 				}
 			}else
 				$("<span/>", {
-					text: parseInt(codigo.slice(fin - crc.length*2)) == 0 ? "Bien" : "Mal",
+					text: parseInt(codigo) == 0 ? "Bien" : "Mal",
 					appendTo: item
 				});
 		}
