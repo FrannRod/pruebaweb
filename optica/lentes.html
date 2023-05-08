@@ -14,7 +14,8 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css"/>
 <!-- Dark mode -->
 <link rel="stylesheet" href="../dark-mode.css"/>
-<!--	-->
+<!-- D3.js -->
+<script src="https://d3js.org/d3.v5.min.js"></script>
 </head>
 <body class="dark">
 	<ion-header>
@@ -95,80 +96,174 @@
 					</ion-item>
 				</ion-col>
 			</ion-row>
+			<ion-row>
+				<ion-col>
+					<div id="grafico"></div>
+				</ion-col>
+			</ion-row>
 		</ion-grid>
 	</ion-content>
 	<script>
 		function recalcularDesdeImagen() {
-		    let foco = parseFloat($('#foco').val());
-		    let imagen = parseFloat($('#imagen').val());
+			let foco = parseFloat($('#foco').val());
+			let imagen = parseFloat($('#imagen').val());
 
-		    let new_objeto = 1 / (1 / foco - 1 / imagen);
+			let new_objeto = 1 / (1 / foco - 1 / imagen);
 
-		    if (!isNaN(new_objeto)) {
-		        $('#objeto').val(new_objeto.toFixed(2));
-		    }
+			if (!isNaN(new_objeto)) {
+				$('#objeto').val(new_objeto.toFixed(2));
+			}
 
-		    recalcular();
+			recalcular();
 		}
 
 		function recalcularDesdeMagnitud() {
-		    let imagen = parseFloat($('#imagen').val());
-		    let magnitud = parseFloat($('#magnitud').val());
+			let imagen = parseFloat($('#imagen').val());
+			let magnitud = parseFloat($('#magnitud').val());
 
-		    let new_objeto = -(imagen * magnitud);
+			let new_objeto = -(imagen * magnitud);
 
-		    if (!isNaN(new_objeto)) {
-		        $('#objeto').val(new_objeto.toFixed(2));
-		    }
+			if (!isNaN(new_objeto)) {
+				$('#objeto').val(new_objeto.toFixed(2));
+			}
 
-		    recalcular();
+			recalcular();
 		}
 
 		function recalcular() {
-		    let foco = parseFloat($('#foco').val());
-		    let objeto = parseFloat($('#objeto').val());
-		    
-		    let new_imagen = 1 / (1 / foco - 1 / objeto);
-		    let new_magnitud = -(new_imagen / objeto);
+			let foco = parseFloat($('#foco').val());
+			let objeto = parseFloat($('#objeto').val());
+			
+			let new_imagen = 1 / (1 / foco - 1 / objeto);
+			let new_magnitud = -(new_imagen / objeto);
 
-		    if (!isNaN(new_imagen)) {
-		        $('#imagen').val(new_imagen.toFixed(2));
-		    }
+			if (!isNaN(new_imagen)) {
+				$('#imagen').val(new_imagen.toFixed(2));
+			}
 
-		    if (!isNaN(new_magnitud)) {
-		        $('#magnitud').val(new_magnitud.toFixed(2));
-		    }
+			if (!isNaN(new_magnitud)) {
+				$('#magnitud').val(new_magnitud.toFixed(2));
+			}
 
-		    objeto = parseFloat($('#objeto').val());
-		    imagen = parseFloat($('#imagen').val());
-		    foco = parseFloat($('#foco').val());
-		    magnitud = parseFloat($('#magnitud').val());
+			objeto = parseFloat($('#objeto').val());
+			imagen = parseFloat($('#imagen').val());
+			foco = parseFloat($('#foco').val());
+			magnitud = parseFloat($('#magnitud').val());
 
-		    if (foco > 0)
-		        $('#tipoLente').val('Convergente')
-		    else
-		        $('#tipoLente').val('Divergente')
+			if (foco > 0)
+				$('#tipoLente').val('Convergente')
+			else
+				$('#tipoLente').val('Divergente')
 
-		    if (objeto > 0)
-		        $('#tipoObjeto').val('Real')
-		    else
-		        $('#tipoObjeto').val('Virtual')
+			if (objeto > 0)
+				$('#tipoObjeto').val('Real')
+			else
+				$('#tipoObjeto').val('Virtual')
 
-		    if (imagen > 0)
-		        $('#tipoImagen').val('Real')
-		    else
-		        $('#tipoImagen').val('Virtual')
+			if (imagen > 0)
+				$('#tipoImagen').val('Real')
+			else
+				$('#tipoImagen').val('Virtual')
 
-		    if (magnitud > 0)
-		        $('#tipoMagnitud1').val('Derecha')
-		    else
-		        $('#tipoMagnitud1').val('Invertida')
+			if (magnitud > 0)
+				$('#tipoMagnitud1').val('Derecha')
+			else
+				$('#tipoMagnitud1').val('Invertida')
 
-		    if (Math.abs(magnitud) > 1)
-		        $('#tipoMagnitud2').val('Ampliada')
-		    else
-		        $('#tipoMagnitud2').val('Reducida')
+			if (Math.abs(magnitud) > 1)
+				$('#tipoMagnitud2').val('Ampliada')
+			else
+				$('#tipoMagnitud2').val('Reducida')
+
+			dibujarGrafico();
 		}
+
+		function dibujarGrafico() {
+		    const objeto = parseFloat(document.getElementById("objeto").value) * -1;
+		    const imagen = parseFloat(document.getElementById("imagen").value);
+		    const foco = parseFloat(document.getElementById("foco").value);
+
+		    const elementoGrafico = document.getElementById("grafico");
+		    elementoGrafico.innerHTML = "";
+
+		    const ancho = 800;
+	        const alto = 200;
+
+	        // Calcular el valor máximo de los valores absolutos de objeto, imagen y foco
+	        const valorMaximo = Math.max(Math.abs(objeto), Math.abs(imagen), Math.abs(foco));
+
+	        // Ajustar la escala basándonos en el valor máximo y el ancho del gráfico
+	        const escala = (ancho / 2) / (valorMaximo + valorMaximo * 0.1);
+
+		    const svg = d3.select("#grafico")
+		        .append("svg")
+		        .attr("width", ancho)
+		        .attr("height", alto);
+
+		    const ejeX = d3.scaleLinear()
+		        .domain([-(ancho / 2) / escala, (ancho / 2) / escala])
+		        .range([0, ancho]);
+
+		    svg.append("g")
+		        .attr("transform", "translate(0," + alto / 2 + ")")
+		        .call(d3.axisBottom(ejeX));
+
+		    // Cambiar la posición en el eje Y de las etiquetas
+		    const etiquetaY = alto / 2 - 20;
+
+		    const circuloObjeto = svg.append("circle")
+		        .attr("cx", ejeX(objeto))
+		        .attr("cy", alto / 2)
+		        .attr("r", 5)
+		        .attr("fill", "red");
+
+		    svg.append("text")
+		        .attr("x", ejeX(objeto) + 10)
+		        .attr("y", etiquetaY)
+		        .attr("fill", "red")
+		        .style("font-size", "12px")
+		        .text("Objeto");
+
+		    const circuloLente = svg.append("circle")
+		        .attr("cx", ejeX(0))
+		        .attr("cy", alto / 2)
+		        .attr("r", 5)
+		        .attr("fill", "blue");
+
+		    svg.append("text")
+		        .attr("x", ejeX(0) + 10)
+		        .attr("y", etiquetaY)
+		        .attr("fill", "blue")
+		        .style("font-size", "12px")
+		        .text("Lente");
+
+		    const circuloImagen = svg.append("circle")
+		        .attr("cx", ejeX(imagen))
+		        .attr("cy", alto / 2)
+		        .attr("r", 5)
+		        .attr("fill", "green");
+
+		    svg.append("text")
+		        .attr("x", ejeX(imagen) + 10)
+		        .attr("y", etiquetaY)
+		        .attr("fill", "green")
+		        .style("font-size", "12px")
+		        .text("Imagen");
+
+		    const circuloFoco = svg.append("circle")
+		        .attr("cx", ejeX(foco))
+		        .attr("cy", alto / 2)
+                .attr("r", 5)
+                .attr("fill", "yellow");
+
+            svg.append("text")
+                .attr("x", ejeX(foco) + 10)
+                .attr("y", etiquetaY)
+                .attr("fill", "yellow")
+                .style("font-size", "12px")
+                .text("Foco");
+        }
+
 	</script>
 </body>
 </html>
