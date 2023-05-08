@@ -66,3 +66,7 @@ body.dark ion-segment-button {
   --ion-segment-button-background: #1c1c1c;
   --ion-segment-button-checked-color: var(--ion-color-primary);
 }
+
+body.dark .item-has-focus {
+  --ion-color-primary: #9022e3;
+}
