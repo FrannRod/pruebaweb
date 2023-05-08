@@ -31,13 +31,13 @@
 				<ion-col>
 					<ion-item>
 						<ion-label position="floating">Potencia</ion-label>
-						<ion-input id="potencia" onchange="$('#foco').val( 1 / $(this).val() * 100 );recalcular()"></ion-input>
+						<ion-input id="potencia" onchange="$('#foco').val(( 1 / $(this).val() * 100 ).toFixed(2));recalcular()"></ion-input>
 					</ion-item>
 				</ion-col>
 				<ion-col>
 					<ion-item>
 						<ion-label position="floating">Foco (cm)</ion-label>
-						<ion-input id="foco" onchange="$('#potencia').val( 1 / ($(this).val() / 100) );recalcular()"></ion-input>
+						<ion-input id="foco" onchange="$('#potencia').val(( 1 / ($(this).val() / 100) ).toFixed(2));recalcular()"></ion-input>
 					</ion-item>
 				</ion-col>
 				<ion-col>
@@ -115,7 +115,7 @@
 		    let imagen = parseFloat($('#imagen').val());
 		    let magnitud = parseFloat($('#magnitud').val());
 
-		    let new_objeto = -(objeto * magnitud);
+		    let new_objeto = -(imagen * magnitud);
 
 		    if (!isNaN(new_objeto)) {
 		        $('#objeto').val(new_objeto.toFixed(2));
@@ -125,53 +125,49 @@
 		}
 
 		function recalcular() {
-			let foco = parseFloat($('#foco').val());
-			let objeto = parseFloat($('#objeto').val());
-			let imagen = parseFloat($('#imagen').val());
-			let magnitud = parseFloat($('#magnitud').val());
-			
+		    let foco = parseFloat($('#foco').val());
+		    let objeto = parseFloat($('#objeto').val());
+		    
+		    let new_imagen = 1 / (1 / foco - 1 / objeto);
+		    let new_magnitud = -(new_imagen / objeto);
 
-			let new_imagen = 1 / (1 / foco - 1 / objeto);
-			let new_foco = 1 / (1 / objeto + 1 / imagen);
-			let new_magnitud = -(imagen / objeto);
+		    if (!isNaN(new_imagen)) {
+		        $('#imagen').val(new_imagen.toFixed(2));
+		    }
 
-			if (!isNaN(new_imagen)) {
-				$('#imagen').val(new_imagen.toFixed(2));
-			}
+		    if (!isNaN(new_magnitud)) {
+		        $('#magnitud').val(new_magnitud.toFixed(2));
+		    }
 
-			if (!isNaN(new_foco)) {
-				$('#foco').val(new_foco.toFixed(2));
-				$('#potencia').val((1 / (new_foco / 100)).toFixed(2));
-			}
+		    objeto = parseFloat($('#objeto').val());
+		    imagen = parseFloat($('#imagen').val());
+		    foco = parseFloat($('#foco').val());
+		    magnitud = parseFloat($('#magnitud').val());
 
-			if (!isNaN(new_magnitud)) {
-				$('#magnitud').val(new_magnitud.toFixed(2));
-			}
+		    if (foco > 0)
+		        $('#tipoLente').val('Convergente')
+		    else
+		        $('#tipoLente').val('Divergente')
 
-			if (foco > 0)
-				$('#tipoLente').val('Convergente')
-			else
-				$('#tipoLente').val('Divergente')
-			
-			if (objeto > 0)
-				$('#tipoObjeto').val('Real')
-			else
-				$('#tipoObjeto').val('Virtual')
-			
-			if (imagen > 0)
-				$('#tipoImagen').val('Real')
-			else
-				$('#tipoImagen').val('Virtual')
-			
-			if (magnitud > 0)
-				$('#tipoMagnitud1').val('Derecha')
-			else
-				$('#tipoMagnitud1').val('Invertida')
-			
-			if (Math.abs(magnitud) > 1)
-				$('#tipoMagnitud2').val('Ampliada')
-			else
-				$('#tipoMagnitud2').val('Reducida')
+		    if (objeto > 0)
+		        $('#tipoObjeto').val('Real')
+		    else
+		        $('#tipoObjeto').val('Virtual')
+
+		    if (imagen > 0)
+		        $('#tipoImagen').val('Real')
+		    else
+		        $('#tipoImagen').val('Virtual')
+
+		    if (magnitud > 0)
+		        $('#tipoMagnitud1').val('Derecha')
+		    else
+		        $('#tipoMagnitud1').val('Invertida')
+
+		    if (Math.abs(magnitud) > 1)
+		        $('#tipoMagnitud2').val('Ampliada')
+		    else
+		        $('#tipoMagnitud2').val('Reducida')
 		}
 	</script>
 </body>
