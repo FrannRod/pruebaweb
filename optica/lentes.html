@@ -5,7 +5,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <!-- BootsTrap -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 <!-- Ionic -->
@@ -32,13 +31,13 @@
 				<ion-col>
 					<ion-item>
 						<ion-label position="floating">Potencia</ion-label>
-						<ion-input id="potencia" onchange="$('#foco').val(( 1 / $(this).val() * 100 ).toFixed(2));recalcular()"></ion-input>
+						<ion-input id="potencia" oninput="$('#foco').val(( 1 / $(this).val() * 100 ).toFixed(2));recalcular()"></ion-input>
 					</ion-item>
 				</ion-col>
 				<ion-col>
 					<ion-item>
 						<ion-label position="floating">Foco (cm)</ion-label>
-						<ion-input id="foco" onchange="$('#potencia').val(( 1 / ($(this).val() / 100) ).toFixed(2));recalcular()"></ion-input>
+						<ion-input id="foco" oninput="$('#potencia').val(( 1 / ($(this).val() / 100) ).toFixed(2));recalcular()"></ion-input>
 					</ion-item>
 				</ion-col>
 				<ion-col>
@@ -52,7 +51,7 @@
 				<ion-col>
 					<ion-item>
 						<ion-label position="floating">Objeto (S)</ion-label>
-						<ion-input id="objeto" onchange="recalcular()"></ion-input>
+						<ion-input id="objeto" oninput="recalcular()"></ion-input>
 					</ion-item>
 				</ion-col>
 				<ion-col>
@@ -66,7 +65,7 @@
 				<ion-col>
 					<ion-item>
 						<ion-label position="floating">Imagen (S')</ion-label>
-						<ion-input id="imagen" onchange="recalcularDesdeImagen()"></ion-input>
+						<ion-input id="imagen" oninput="recalcularDesdeImagen()"></ion-input>
 					</ion-item>
 				</ion-col>
 				<ion-col>
@@ -80,7 +79,7 @@
 				<ion-col>
 					<ion-item>
 						<ion-label position="floating">Magnitud (m)</ion-label>
-						<ion-input id="magnitud" onchange="recalcularDesdeMagnitud()"></ion-input>
+						<ion-input id="magnitud" oninput="recalcularDesdeMagnitud()"></ion-input>
 					</ion-item>
 				</ion-col>
 				<ion-col>
