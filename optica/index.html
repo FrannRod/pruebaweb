@@ -13,7 +13,13 @@
 <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css"/>
 <!--  -->
+<!-- SWAL -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!--  -->
+<!-- Dark mode -->
 <link rel="stylesheet" href="../dark-mode.css"/>
+<!--  -->
 </head>
 <body class="dark">
 	<ion-header>
@@ -29,10 +35,10 @@
 		  <ion-row style="padding-top: 20px">
 			<ion-col></ion-col>
 			<ion-col>
-			  <ion-button expand="block" href="espejos.html">Espejos</ion-button>
+			  <ion-button expand="block" id="espejosBtn">Espejos</ion-button>
 			</ion-col>
 			<ion-col>
-			  <ion-button expand="block" href="dioptras.html">Dioptras</ion-button>
+			  <ion-button expand="block" id="dioptrasBtn">Dioptras</ion-button>
 			</ion-col>
 			<ion-col>
 			  <ion-button expand="block" href="lentes.html">Lentes</ion-button>
@@ -41,5 +47,19 @@
 		  </ion-row>
 		</ion-grid>
 	</ion-content>
+	<script>
+	  $(document).ready(function () {
+	    $('#espejosBtn, #dioptrasBtn').click(function (e) {
+	      e.preventDefault();
+	      Swal.fire({
+	        icon: 'info',
+	        title: 'En construcción',
+	        text: 'Esta función todavía no está implementada',
+	        showConfirmButton: true,
+	        backdrop: false
+	      });
+	    });
+	  });
+	</script>
 </body>
 </html>
